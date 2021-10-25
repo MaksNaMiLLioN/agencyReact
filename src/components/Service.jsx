@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import How from '../img/pingirl.png'
 import MiniCard from './MiniCard'
@@ -12,12 +12,25 @@ const Container = styled.div`
 
 const Left = styled.div`
     width: 50%;
+    position: relative;
 `
 
 const Image = styled.img`
+    display: ${(props) => props.open && "none"};
     width: 90%;
     height: 100%;
     margin-left: 100px; 
+`
+
+const Video = styled.video`
+    display: ${(props) => !props.open && "none"};
+    height: 300px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    right: 0;
+
 `
 
 const Right = styled.div`
@@ -67,12 +80,14 @@ const Icon = styled.img`
 
 const Service = () => {
 
+    const [open, setOpen] = useState(false)
 
 
     return (
         <Container>
             <Left>
-                <Image src={How}/>
+                <Image open={open} src={How}/>
+                <Video open={open} autoPlay loop controls src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"/>
             </Left>
             <Right>
                 <Wrapper>
@@ -89,7 +104,7 @@ const Service = () => {
                         <MiniCard />
                         <MiniCard />    
                     </CardContainer>
-                    <Button><Icon src={Play}/>How it works</Button>
+                    <Button onClick={()=>setOpen(true)}><Icon src={Play}/>How it works</Button>
                 </Wrapper>
             </Right>
 
