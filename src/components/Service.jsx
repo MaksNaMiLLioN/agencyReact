@@ -8,11 +8,19 @@ import Play from '../img/play.png'
 const Container = styled.div`
     display: flex;
     height: 100%;
+
+    @media only screen and (max-width: 480px){
+        flex-direction: column;
+    }
 `
 
 const Left = styled.div`
     width: 50%;
     position: relative;
+
+    @media only screen and (max-width: 480px){
+        display: none;
+    }
 `
 
 const Image = styled.img`
@@ -31,16 +39,28 @@ const Video = styled.video`
     margin: auto;
     right: 0;
 
+    @media only screen and (max-width: 480px){
+        width: 100%;
+    }
+
 `
 
 const Right = styled.div`
     width: 50%;
+
+    @media only screen and (max-width: 480px){
+        width: 100%;
+    }
 `
 
 const Wrapper = styled.div`
     padding: 50px;
     display: flex;
     flex-direction: column;
+
+    @media only screen and (max-width: 480px){
+        padding: 20px;
+    }
 
 `
 
@@ -78,10 +98,29 @@ const Icon = styled.img`
     margin-right: 10px;
 `
 
+const Modal = styled.div`
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0, 0.5);
+`
+
+const CloseButton = styled.button`
+    position: absolute;
+    background-color: white;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    right: 5px;
+    top: 30px;
+`
+
 const Service = () => {
 
     const [open, setOpen] = useState(false)
-
+    const smallScreen = window.screen.width <= 480 ? true : false
 
     return (
         <Container>
@@ -107,7 +146,13 @@ const Service = () => {
                     <Button onClick={()=>setOpen(true)}><Icon src={Play}/>How it works</Button>
                 </Wrapper>
             </Right>
-
+            {smallScreen && open && (
+                <Modal>
+                    <Video open={open} autoPlay loop controls src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"/>
+                    <CloseButton onClick={()=>setOpen(false)}>Close</CloseButton>
+                </Modal>
+               
+            )}
         </Container>
     )
 }
